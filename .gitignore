@@ -1,0 +1,11 @@
+# General
+.DS_Store
+
+# python temporary
+*.pyc
+*.egg-info
+*__pycache__*
+*.pytest_cache*
+
+# IntelliJ project files
+.idea
