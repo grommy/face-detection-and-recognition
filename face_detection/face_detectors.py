@@ -1,13 +1,16 @@
-import cv2
 from collections import namedtuple
+import cv2
+
 import face_recognition
 import os
 
+Box = namedtuple('Box', ['top', 'right', 'bottom', 'left'])
 
 GREEN = (0, 255, 0)
 RED = (0, 0, 255)
 
-Box = namedtuple('Box', ['top', 'right', 'bottom', 'left'])
+front_cascPath = "haarcascade_frontalface_default.xml"
+profile_cascPath = "haarcascade_profileface.xml"
 
 
 class FaceDetector(object):
@@ -15,9 +18,9 @@ class FaceDetector(object):
         pass
 
     @staticmethod
-    def draw_rectangle(frame, bbox_list, color=GREEN):
+    def draw_rectangle(frame, bbox_list, color=GREEN, line_width=2):
         for (top, right, bottom, left) in bbox_list:
-            cv2.rectangle(frame, (left, top), (right, bottom), color, 2)
+            cv2.rectangle(frame, (left, top), (right, bottom), color, thickness=line_width)
 
     def get_image(self):
         pass
@@ -63,7 +66,7 @@ class HaarFaceDetector(FaceDetector):
                 minSize=(30, 30),
                 # flags=cv2.CASCADE_SCALE_IMAGE
             )
-            face_bbox = [Box(y, x, y + h, x + w,) for (x, y, w, h) in faces]
+            face_bbox = [Box(y, x + w, y + h, x,) for (x, y, w, h) in faces]
 
             non_duplicated = []
             for box_new in face_bbox:
@@ -88,9 +91,13 @@ class DlibFaceDetector(FaceDetector):
 
     @staticmethod
     def _prepare_frame(frame):
-        return cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        return cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
     def get_face_bbox(self, frame):
-        rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        boxes = face_recognition.face_locations(rgb, model=self.model)
-        return boxes
+        # rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        prepared_frame = self._prepare_frame(frame)
+        boxes = face_recognition.face_locations(prepared_frame, model=self.model)
+        print(boxes)
+        bboxes = [Box(*box) for box in boxes]
+        # bboxes = boxes
+        return bboxes

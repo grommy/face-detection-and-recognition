@@ -3,11 +3,8 @@ import cv2
 import logging as log
 import datetime as dt
 from time import sleep
-from face_detection.face_detectors import HaarFaceDetector, DlibFaceDetector
-
-front_cascPath = "haarcascade_frontalface_default.xml"
-profile_cascPath = "haarcascade_profileface.xml"
-
+from face_detection.face_detectors import HaarFaceDetector, DlibFaceDetector, front_cascPath, \
+    profile_cascPath
 
 GREEN = (0, 255, 0)
 RED = (0, 0, 255)
