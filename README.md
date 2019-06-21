@@ -16,9 +16,10 @@ data/photos/
 ```
 * unix-like os
 * python3 and pip installed
-* Install libs
-   - `pip install -r requirements.txt`
+* Install libs 
+   - install [opencv](https://medium.com/@nuwanprabhath/installing-opencv-in-macos-high-sierra-for-python-3-89c79f0a246a)
    - install [face-regognition lib](https://github.com/ageitgey/face_recognition#installation-options)
+   - install other requirements `pip install -r requirements.txt`
 
 ## To run:
 
