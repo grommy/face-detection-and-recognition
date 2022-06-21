@@ -1,5 +1,5 @@
 scipy==1.2.1
-numpy==1.16.2
+numpy==1.22.0
 scikit-learn==0.20.2
 imutils==0.5.2
 opencv-python>=3.0
